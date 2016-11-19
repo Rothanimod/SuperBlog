@@ -17,7 +17,7 @@
     <% @posts.each do |post| %>
       <tr>
         <td><%= post.title %></td>
-        <td><%= post.body.first(250) %></td>
+        <td><%= markdown(post.body.first(250)) %></td>
         <td><%= post.user.email%></td>
         <td><%= post.created_at.strftime("Creado el %d de %B de %Y") %></td>
         <td><%= link_to 'Show', post %></td>

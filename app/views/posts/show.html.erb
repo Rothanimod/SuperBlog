@@ -15,7 +15,7 @@
 
 <p>
   <strong>Body:</strong>
-  <%= @post.body %>
+  <%= markdown(@post.body) %>
 </p>
 <% if  current_user == @post.user %>
 <%= link_to 'Edit', edit_post_path(@post) %> |
@@ -47,7 +47,7 @@
         <%=comm.created_at%>
       </p>
       <p>
-        <%=comm.body%>
+        <%= markdown(comm.body)%>
       </p>
     <%end%>
  <%end%>
