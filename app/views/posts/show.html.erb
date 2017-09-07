@@ -1,53 +1,56 @@
-<p id="notice"><%= notice %></p>
+<div class="row">
+    <div class="col-md-6 col-md-offset-3">
+      <p id="notice"><%= notice %></p>
+      <%= link_to 'Volver', posts_path %>
 
-<p>
-  <strong>Title:</strong>
-  <%= @post.title %>
-</p>
+        <h1><%= @post.title %></h1>
 
-<p>
-  <strong>Por: <%= @post.user.email%> </strong>
-</p>
-
-<p>
-  <strong><%= @post.user.created_at.strftime("Creado el %d de %B de %Y")%> </strong>
-</p>
-
-<p>
-  <strong>Body:</strong>
-  <%= markdown(@post.body) %>
-</p>
-<% if  current_user == @post.user %>
-<%= link_to 'Edit', edit_post_path(@post) %> |
-<%end%>
-<%= link_to 'Back', posts_path %>
-
-<h2>Comentar</h2>
-<%if (user_signed_in?)%>
-  <%= form_for(@comment) do |f| %>
-  <div class="field">
-    <%= f.label :body %>
-    <%= f.text_area :body %>
-  </div>
-
-  <%= f.hidden_field :post_id, :value => @post.id %>
-
-  <div class="actions">
-    <%= f.submit %>
-  </div>
-  <% end %>
-<%end%>
-
- <% if comments = @post.comments %>
-    <%comments.each do |comm| %>
       <p>
-        <%=  comm.user.email%>
+        <strong>Por: <%= @post.user.email%> </strong>
       </p>
       <p>
-        <%=comm.created_at%>
+        <strong><%= @post.user.created_at.strftime("Creado el %d de %B de %Y")%> </strong>
       </p>
       <p>
-        <%= markdown(comm.body)%>
+        <%= markdown(@post.body) %>
       </p>
-    <%end%>
- <%end%>
+      <% if  current_user == @post.user %>
+      <%= link_to 'Editar', edit_post_path(@post) %> |
+      <%end%>
+      <%= link_to 'Volver', posts_path %>
+
+
+
+      <div class="row">
+        <div class="col-md-6">
+          <%if (user_signed_in?)%>
+          <h2>Comentar</h2>
+            <%= form_for(@comment) do |f| %>
+            <div class="field">
+              <%= f.label :body %>
+              <%= f.text_area :body %>
+            </div>
+
+            <%= f.hidden_field :post_id, :value => @post.id %>
+
+            <div class="actions">
+              <%= f.submit %>
+            </div>
+            <% end %>
+          <%end%>
+          <% if comments = @post.comments %>
+             <%comments.each do |comm| %>
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h4 class="panel-title"><%=  comm.user.email%></h4><%=comm.created_at.strftime("Creado el %d de %B de %Y")%>
+            </div>
+            <div class="panel-body">
+              <%= markdown(comm.body)%>
+            </div>
+          </div>
+          <%end%>
+       <%end%>
+        </div>
+      </div>
+    </div>
+</div>

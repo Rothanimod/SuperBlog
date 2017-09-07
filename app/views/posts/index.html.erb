@@ -1,33 +1,20 @@
 <p id="notice"><%= notice %></p>
-
-<h1>Posts</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>Title</th>
-      <th>Body</th>
-      <th>Autor</th>
-      <th>Publicado el</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <h1>Posts Recientes</h1>
     <% @posts.each do |post| %>
-      <tr>
-        <td><%= post.title %></td>
-        <td><%= markdown(post.body.first(250)) %></td>
-        <td><%= post.user.email%></td>
-        <td><%= post.created_at.strftime("Creado el %d de %B de %Y") %></td>
-        <td><%= link_to 'Show', post %></td>
-        <% if current_user == post.user %>
-          <td><%= link_to 'Edit', edit_post_path(post) %></td>
-          <td><%= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-        <%end%>
-      </tr>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title"><%= link_to post.title, post %></h3><%= post.created_at.strftime("Creado el %d de %B de %Y") %> Por: <%= post.user.email%>
+        </div>
+        <div class="panel-body">
+          <%= markdown(post.body.first(250)) %>
+          <% if current_user == post.user %>
+            <%= link_to 'Editar Post', edit_post_path(post), class: 'btn btn-default' %>
+            <%= link_to 'Eliminar Post', post, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+          <%end%>
+        </div>
+      </div>
     <% end %>
-  </tbody>
-</table>
-
-<br>
+  </div>
+</div>
